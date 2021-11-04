@@ -305,14 +305,14 @@
 
     //Pusher.logToConsole = true; 
     const pusher = new Pusher(
-        "729e19586eb2111ddef1", // Replace with 'key' from dashboard
+        "", // Replace with 'key' from dashboard
       {
-        cluster: "mt1", // Replace with 'cluster' from dashboard
+        cluster: "", // Replace with 'cluster' from dashboard
         forceTLS: true,
       }
     );
-    const channel = pusher.subscribe("diag2-update");
-    channel.bind("diag2", (data) => {
+    const channel = pusher.subscribe("channel");
+    channel.bind("event", (data) => {
       myDiagram.model = go.Model.fromJson(data.json);
       loadDiagramProperties();
     });
@@ -321,7 +321,7 @@
       saveDiagramProperties(); 
       const options = {
         method: 'post',
-        url: '/send-diag2-update',
+        url: '/url',
         data: {
           json: myDiagram.model.toJson(),
         },
