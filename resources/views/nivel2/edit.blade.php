@@ -13,8 +13,8 @@
     <div>
         <h4>Nivel 2(Contenedores) - {{$nivel2->title}} - autor ({{$nivel2->author_name}})</h4>
     </div>
-    
-    <div onmouseleave="Update()" style="width: 100%; display: flex; justify-content: space-between">
+    {{--onmouseleave="Update()"  onkeypress="Update()"--}}
+    <div onmouseup="Update()"  style="width: 100%; display: flex; justify-content: space-between">
         <div id="myPaletteDiv" style="width: 140px; margin-right: 2px; background-color: whitesmoke; border: solid 1px black"></div>
         <div id="myDiagramDiv" style="flex-grow: 1; height: 620px; border: solid 1px black"></div>
         {{--<div class="card text-dark bg-light" style="width: 150px; margin-left: 2px;  border: solid 1px black">
@@ -323,7 +323,6 @@
 //-----------------------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------------------
 
-    //Pusher.logToConsole = true; 
     const pusher = new Pusher(
         "729e19586eb2111ddef1", // Replace with 'key' from dashboard
       {
@@ -333,8 +332,10 @@
     );
     const channel = pusher.subscribe("diag2-update");
     channel.bind("diag2", (data) => {
-      myDiagram.model = go.Model.fromJson(data.json);
-      loadDiagramProperties();
+      if (data.id_user != '{{Auth::id()}}') {
+        myDiagram.model = go.Model.fromJson(data.json);
+        loadDiagramProperties(); 
+      }
     });
 
     function Update(){
@@ -344,6 +345,7 @@
         url: '/send-diag2-update',
         data: {
           json: myDiagram.model.toJson(),
+          id_user: '{{Auth::id()}}',
         },
       }
       myDiagram.isModified = false;

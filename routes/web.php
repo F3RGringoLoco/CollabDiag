@@ -33,7 +33,10 @@ Route::get('/', function () {
 
 Route::post('/send-diag2-update', function (Request $request) {
     event(
-        new Level2($request->input('json')),
+        new Level2(
+            $request->input('json'), 
+            $request->input('id_user')
+        ),
     );
 
     return ["success" => true];
@@ -41,7 +44,10 @@ Route::post('/send-diag2-update', function (Request $request) {
 
 Route::post('/send-diag3-update', function (Request $request) {
     event(
-        new Level3($request->input('json')),
+        new Level3(
+            $request->input('json'),
+            $request->input('id_user'),
+        ),
     );
 
     return ["success" => true];

@@ -322,7 +322,6 @@
 //-----------------------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------------------
 
-    //Pusher.logToConsole = true; 
     const pusher = new Pusher(
         "729e19586eb2111ddef1", // Replace with 'key' from dashboard
       {
@@ -330,10 +329,13 @@
         forceTLS: true,
       }
     );
+
     const channel = pusher.subscribe("diag3-update");
     channel.bind("diag3", (data) => {
-      myDiagram.model = go.Model.fromJson(data.json);
-      loadDiagramProperties();
+      if (data.id_user != '{{Auth::id()}}') {
+        myDiagram.model = go.Model.fromJson(data.json);
+        loadDiagramProperties(); 
+      }
     });
 
     function Update(){
@@ -343,6 +345,7 @@
         url: '/send-diag3-update',
         data: {
           json: myDiagram.model.toJson(),
+          id_user: '{{Auth::id()}}',
         },
       }
       myDiagram.isModified = false;

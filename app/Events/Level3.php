@@ -15,15 +15,17 @@ class Level3 implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $json;
+    public $id_user;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($json)
+    public function __construct($json, $id)
     {
         //
         $this->json = $json;
+        $this->id_user = $id;
     }
 
     /**
