@@ -6,11 +6,12 @@
 <div id="sample">
     <div  class="float-end">
         <p class="text" id="getID">
-            {{$nivel2->title_slug}}
+            {{--{{$nivel2->title_slug}}--}}
+            Copia e invita con este link  - {{Request::url()}}
         </p> 
     </div>
     <div>
-        <h3>{{$nivel2->title}} - autor ({{$nivel2->author_name}})</h3>
+        <h4>Nivel 2(Contenedores) - {{$nivel2->title}} - autor ({{$nivel2->author_name}})</h4>
     </div>
     
     <div onmouseleave="Update()" style="width: 100%; display: flex; justify-content: space-between">
