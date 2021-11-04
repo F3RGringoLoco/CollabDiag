@@ -99,6 +99,10 @@
             "undoManager.isEnabled": true
           });
 
+          myDiagram.animationManager.canStart = function(reason) {
+            return false;
+          }
+
       // Cuando el documento es modificado, se añade un * (asterisco) al titulo y habilita el boton de guardar
       myDiagram.addDiagramListener("Modified", function(e) {
         //var button = document.getElementById("SaveButton");
